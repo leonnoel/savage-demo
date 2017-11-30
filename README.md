@@ -7,5 +7,5 @@
 
 ## Usage
 
-1. run `npm run dev`
+1. run `npm run savage`
 2. Navigate to `localhost:3000`
