@@ -10,11 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "assert": "^1.4.1",
     "body-parser": "^1.14.2",
+    "bson": ">=1.0.5",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
-    "mongodb": "^2.1.4",
-    "bson": ">=1.0.5"
+    "mongodb": "^2.2.36"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
