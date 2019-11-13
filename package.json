@@ -15,7 +15,7 @@
     "bson": ">=1.0.5",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
-    "mongodb": "^2.2.36"
+    "mongodb": "^3.3.4"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
