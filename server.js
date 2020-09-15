@@ -9,7 +9,7 @@ const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites
 const dbName = "demo";
 
 app.listen(3000, () => {
-    MongoClient.connect(url, { useNewUrlParser: true }, (error, client) => {
+    MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
         if(error) {
             throw error;
         }
@@ -24,7 +24,6 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  //console.log(db)
   db.collection('messages').find().toArray((err, result) => {
     if (err) return console.log(err)
     res.render('index.ejs', {messages: result})
@@ -32,7 +31,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/messages', (req, res) => {
-  db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')
     res.redirect('/')
