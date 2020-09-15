@@ -18,7 +18,7 @@
     "mongodb": "^3.3.4"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10",
-    "minimist": ">=1.2.2"
+    "minimist": ">=1.2.2",
+    "nodemon": "^2.0.4"
   }
 }
