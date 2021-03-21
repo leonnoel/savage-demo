@@ -5,7 +5,9 @@ const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
 
-const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
+//mongo url is different and delete password for that demo cluster 
+
+const url="mongodb+srv://savage:123@cluster0.gfz1v.mongodb.net/demo?retryWrites=true&w=majority"
 const dbName = "demo";
 
 app.listen(3000, () => {
@@ -37,12 +39,40 @@ app.post('/messages', (req, res) => {
     res.redirect('/')
   })
 })
+// root of messgaes
+// find a documented named name 
 
 app.put('/messages', (req, res) => {
   db.collection('messages')
+  //findOneAndUpdate is within mongoDB 
+  // basically Monogo is find that and update 
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
       thumbUp:req.body.thumbUp + 1
+      // thumbDown:req.body.thumbDown-1
+      // finds that property and adds one into the html updating it
+    }
+  }, {
+    //if it doesn't find anything please 
+    // create it then 
+    sort: {_id: -1},  //
+    upsert: true  // insert a fake one and will make it 
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+// thumbsDown
+app.put('/thumbDown', (req, res) => {
+  db.collection('messages')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $set: {
+      // thumbUp:req.body.thumbUp- 1
+      // thumbDown:req.body.thumbUp-1
+      // thumbDown: req.body.thumbUp - 1
+            thumbDown: req.body.thumbDown + 1
+
+
     }
   }, {
     sort: {_id: -1},
@@ -52,7 +82,6 @@ app.put('/messages', (req, res) => {
     res.send(result)
   })
 })
-
 app.delete('/messages', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
     if (err) return res.send(500, err)
