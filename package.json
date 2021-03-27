@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "assert": "^1.4.1",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.2",
     "bson": ">=1.0.5",
     "ejs": "^2.3.4",
