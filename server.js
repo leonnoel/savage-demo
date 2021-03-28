@@ -1,7 +1,10 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const PORT = 1001
 const MongoClient = require('mongodb').MongoClient
+
+
 
 var db, collection;
 
@@ -18,59 +21,50 @@ app.listen(3000, () => {
     });
 });
 
-app.set('view engine', 'ejs')
+// app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  db.collection('messages').find().toArray((err, result) => {
+  db.collection('list').find().toArray((err, result) => {
     if (err) return console.log(err)
     res.render('index.ejs', {messages: result})
   })
 })
 
-app.post('/messages', (req, res) => {
-  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+app.post('/list', (req, res) => {
+  db.collection('list').insertOne({msg: req.body.msg}, (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')
     res.redirect('/')
   })
 })
 
-app.put('/messages', (req, res) => {
-  db.collection('messages')
-  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    $set: {
-      thumbUp:req.body.thumbUp + 1
-    }
-  }, {
-    sort: {_id: -1},
-    upsert: true
-  }, (err, result) => {
-    if (err) return res.send(err)
-    res.send(result)
-  })
-})
+// app.put('/messages', (req, res) => {
+//   db.collection('messages')
+//   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+//     $set: {
+//       thumbUp:req.body.thumbUp + 1
+//     }
+//   }, {
+//     sort: {_id: -1},
+//     upsert: true
+//   }, (err, result) => {
+//     if (err) return res.send(err)
+//     res.send(result)
+//   })
+// })
 
-app.put('/thumbDown', (req, res) => {
-  db.collection('messages')
-  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    $set: {
-      thumbUp:req.body.thumbUp - 1
-    }
-  }, {
-    sort: {_id: -1},
-    upsert: true
-  }, (err, result) => {
-    if (err) return res.send(err)
-    res.send(result)
-  })
-})
 
 app.delete('/messages', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
     if (err) return res.send(500, err)
     res.send('Message deleted!')
   })
+})
+
+
+app.listen(PORT, ()=>{
+    console.log(`Server running on port ${PORT}`)
 })
