@@ -29,9 +29,17 @@ app.get('/', (req, res) => {
     res.render('index.ejs', {messages: result})
   })
 })
+// app.get('/check', (req, res) => {
+//   db.collection('messages').find().toArray((err, result) => {
+//     if (err) return console.log(err)
+//     res.render('check.ejs', {messages: result})
+//   })
+// })
 
 app.post('/messages', (req, res) => {
-  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+  let isPalindrome = req.body.msg === req.body.msg.split('').reverse().join('') ? true : false
+  console.log(isPalindrome)
+  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0, palindrome: isPalindrome}, (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')
     res.redirect('/')

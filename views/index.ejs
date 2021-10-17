@@ -2,14 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>21 Savage Fans</title>
-  <link rel="shortcut icon" href="favicon.ico">
+  <title>Palindrome POP!</title>
+  <link rel="shortcut icon" href="/public/images/favicon.png">
   <link rel="stylesheet" href="font-awesome.min.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
 </head>
 <body>
-  <h1>21 Savage</h1>
-  <h2>Why you trappin so hard?</h2>
+  <h1>Palindrome POP</h1>
+  <span>Enter your choice for BEST Palindrome of the 2000's!</span>
 
 
   <h3>Messages</h3>
@@ -19,6 +23,7 @@
       <span><%= messages[i].name %></span>
       <span><%= messages[i].msg %></span>
       <span><%= messages[i].thumbUp %></span>
+      <span><%= messages[i].palindrome %></span>
       <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
       <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
       <span><i class="fa fa-trash" aria-hidden="true"></i></span>
@@ -26,7 +31,7 @@
   <% } %>
   </ul>
 
-  <h2>Add a message</h2>
+  <h2>Add your name and palindrome</h2>
 
   <form action="/messages" method="POST">
     <input type="text" placeholder="name" name="name">

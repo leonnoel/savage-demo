@@ -1,6 +1,14 @@
 body{
-  background: red;
+  font-family: 'Montserrat', sans-serif;
+  color: rgb(140,82,255);
+  background-image: url('images/Purple\ Snow.png');
+  background-size: cover;
+  width: 600px;
+  margin-top: 200px;
+  padding-left: 300px;
 }
 h3{
   margin-top: 40px;
 }
+
+
