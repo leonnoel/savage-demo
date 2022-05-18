@@ -5,8 +5,8 @@ const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
 
-const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
-const dbName = "demo";
+const dbName = "savage";
+const url = `mongodb+srv://admin:123@cluster0.9nt6d.mongodb.net/${dbName}?retryWrites=true&w=majority`
 
 app.listen(3000, () => {
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
@@ -33,12 +33,11 @@ app.get('/', (req, res) => {
 app.post('/messages', (req, res) => {
   db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
     if (err) return console.log(err)
-    console.log('saved to database')
     res.redirect('/')
   })
 })
 
-app.put('/messages', (req, res) => {
+app.put('/thumbUp', (req, res) => {
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
@@ -49,6 +48,21 @@ app.put('/messages', (req, res) => {
     upsert: true
   }, (err, result) => {
     if (err) return res.send(err)
+    res.send(result)
+  })
+})
+app.put('/thumbDown', (req, res) => {
+  db.collection('messages')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $set: {
+      thumbDown: req.body.thumbDown + 1
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    console.log(result);
     res.send(result)
   })
 })
