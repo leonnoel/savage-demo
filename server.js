@@ -5,8 +5,13 @@ const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
 
-const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
+const url = "mongodb+srv://kerlinaugustin:sneakyboi7@cluster0.eanp1.mongodb.net/?retryWrites=true&w=majority"
+
+// const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
 const dbName = "demo";
+
+// app.listen runs a local host for us. app is coming from the variable above. Theres an empty function that makes the local host run automatically when called upon. MongoClient is variable that we declared above and it holds our data base as an object. We pass in the function connect to connect our unique url. useNewUrlParser gives us a new url to dynamically update our url. Then useUnifiedTopology deploys the url to the server. Then error runs the erroc code block. While client runs the code block if everything goes correct with no errors.  
+
 
 app.listen(3000, () => {
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
@@ -43,6 +48,21 @@ app.put('/messages', (req, res) => {
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
       thumbUp:req.body.thumbUp + 1
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
+app.put('/messagesTDown', (req, res) => {
+  db.collection('messages')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $set: {
+      thumbUp:req.body.thumbUp - 1
     }
   }, {
     sort: {_id: -1},
