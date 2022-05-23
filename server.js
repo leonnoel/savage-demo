@@ -1,18 +1,11 @@
-// this is the epress module imported with require keyword
 const express = require('express')
-// the express function represents all the functions of the module 
 const app = express()
 const bodyParser = require('body-parser')
-// Set up the connection to the local db
 const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
 
-// url from databases
-const url = "mongodb+srv://resilience:rc123@cluster0.88dvi.mongodb.net/?retryWrites=true&w=majority";
-// mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true
-
-// mongobd.com to use a db
+const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
 const dbName = "demo";
 
 app.listen(3000, () => {
@@ -20,7 +13,6 @@ app.listen(3000, () => {
         if(error) {
             throw error;
         }
-        // reassigning the varible db, client represent the data from MongoDB, 
         db = client.db(dbName);
         console.log("Connected to `" + dbName + "`!");
     });
@@ -46,7 +38,7 @@ app.post('/messages', (req, res) => {
   })
 })
 
-app.put('/up', (req, res) => {
+app.put('/messages', (req, res) => {
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
