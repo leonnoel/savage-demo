@@ -13,7 +13,7 @@ const dbName = "demo";
 // app.listen runs a local host for us. app is coming from the variable above. Theres an empty function that makes the local host run automatically when called upon. MongoClient is variable that we declared above and it holds our data base as an object. We pass in the function connect to connect our unique url. useNewUrlParser gives us a new url to dynamically update our url. Then useUnifiedTopology deploys the url to the server. Then error runs the erroc code block. While client runs the code block if everything goes correct with no errors.  
 
 
-app.listen(3000, () => {
+app.listen(4000, () => {
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
         if(error) {
             throw error;
