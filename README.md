@@ -5,7 +5,7 @@
 
 ## Languages Used
 
-This was created using HTML5, CSS3, JavaScript, MongoDB, and Node.js.
+This was created using EJS, HTML5, CSS3, JavaScript, MongoDB, and Node.js.
 
 The assignment was to understand the code, use my own MongoDB, and fix the thumbs down button. I used some bootstap on it.
 
