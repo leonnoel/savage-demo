@@ -1,6 +1,66 @@
-body{
-  background: red;
+/* Box Model Hack */
+* {
+  box-sizing: border-box;
 }
-h3{
-  margin-top: 40px;
+
+/* Clear fix hack */
+.clearfix:after {
+     content: ".";
+     display: block;
+     clear: both;
+     visibility: hidden;
+     line-height: 0;
+     height: 0;
+}
+
+.clear {
+	clear: both;
+}
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+body {
+  background: radial-gradient(circle, rgba(34,193,195,1) 0%, rgba(253,45,68,1) 100%);
+}
+
+
+html {
+  font-size: 62.5%;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+header {
+  margin: 2rem auto;
+  text-align: center;
+  font-size: 2rem;
+
+}
+
+
+.message-section {
+  text-align: center;
+  font-size: 2rem;
+}
+
+ul li {
+  list-style: none;
+  text-decoration: none;
+  padding-top: 1rem;
+}
+
+input {
+  border: none;
+  border-radius: .5rem;
+  font-size: 2.5rem;
+  padding-left: 1rem;
+}
+button {
+  display: block;
+  border: none;
+  border-radius: .5rem;
+  font-size: 2.5rem;
+  margin: 2rem auto;
+  width: 15rem;
 }

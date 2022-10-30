@@ -53,6 +53,20 @@ app.put('/messages', (req, res) => {
   })
 })
 
+// put request to handle thumbs Down
+app.put('/messages/thumbDown', (req, res) => {
+
+  db.collection('messages').findOneAndUpdate({name: req.body.name, msg: req.body.msg}, { // Find the characeter from the value placed in the input
+    $set: {thumbUp: req.body.thumbDown - 1}
+  })
+  .then(results => {
+    console.log(`updated`)
+    res.json(`updated`)
+  })
+  .catch(error => console.error(error))
+
+})
+
 app.delete('/messages', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
     if (err) return res.send(500, err)
