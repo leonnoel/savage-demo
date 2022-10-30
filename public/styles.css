@@ -20,6 +20,10 @@
 /******************************************
 /* LAYOUT
 /*******************************************/
+body {
+  background: radial-gradient(circle, rgba(34,193,195,1) 0%, rgba(253,45,68,1) 100%);
+}
+
 
 html {
   font-size: 62.5%;
@@ -44,4 +48,19 @@ ul li {
   list-style: none;
   text-decoration: none;
   padding-top: 1rem;
+}
+
+input {
+  border: none;
+  border-radius: .5rem;
+  font-size: 2.5rem;
+  padding-left: 1rem;
+}
+button {
+  display: block;
+  border: none;
+  border-radius: .5rem;
+  font-size: 2.5rem;
+  margin: 2rem auto;
+  width: 15rem;
 }

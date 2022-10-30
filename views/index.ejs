@@ -24,9 +24,9 @@
     <ul class="messages">
     <% for(var i=0; i<messages.length; i++) {%>
       <li class="message">
-        <span><%= messages[i].name %></span>
-        <span><%= messages[i].msg %></span>
-        <span><%= messages[i].thumbUp %></span>
+        <span id="name"><%= messages[i].name %></span>
+        <span id="message"><%= messages[i].msg %></span>
+        <span id="likeNum"><%= messages[i].thumbUp %></span>
         <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
         <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
         <span><i class="fa fa-trash" aria-hidden="true"></i></span>
