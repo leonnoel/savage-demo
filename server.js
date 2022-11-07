@@ -5,8 +5,8 @@ const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
 
-const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
-const dbName = "demo";
+const url = "mongodb+srv://antTheDev:Cocopuffs12@cluster0.phhdyu1.mongodb.net/contacts?retryWrites=true&w=majority";
+const dbName = "contacts";
 
 app.listen(3000, () => {
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
@@ -24,25 +24,26 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  db.collection('messages').find().toArray((err, result) => {
+  db.collection('contacts').find().toArray((err, result) => {
     if (err) return console.log(err)
-    res.render('index.ejs', {messages: result})
+    res.render('index.ejs', {contacts: result})
   })
 })
 
-app.post('/messages', (req, res) => {
-  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+app.post('/contacts', (req, res) => {
+  db.collection('contacts').insertOne({name:req.body.name, email:req.body.email, phone:req.body.phone,favorite:false}, (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')
     res.redirect('/')
   })
 })
 
-app.put('/messages', (req, res) => {
-  db.collection('messages')
-  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+app.put('/contacts', (req, res) => {
+  console.log(req.body.email, req.body.star)
+  db.collection('contacts')
+  .findOneAndUpdate({ email: req.body.email}, {
     $set: {
-      thumbUp:req.body.thumbUp + 1
+      favorite:req.body.star 
     }
   }, {
     sort: {_id: -1},
