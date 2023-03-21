@@ -5,7 +5,7 @@ const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
 
-const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
+const url = "mongodb+srv://user:W1cQiMwJVN5thvdR@cluster0.jrxcjiu.mongodb.net/demo?retryWrites=true&w=majority";
 const dbName = "demo";
 
 app.listen(3000, () => {
@@ -18,7 +18,6 @@ app.listen(3000, () => {
     });
 });
 
-app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(express.static('public'))
@@ -31,18 +30,42 @@ app.get('/', (req, res) => {
 })
 
 app.post('/messages', (req, res) => {
-  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+  db.collection('messages').insertOne(
+    {name: req.body.name, 
+      msg: req.body.msg, 
+      thumbUp: 0, thumbDown:0}, 
+    (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')
     res.redirect('/')
   })
 })
 
-app.put('/messages', (req, res) => {
+app.put('/thumbup', (req, res) => {
   db.collection('messages')
-  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+  .findOneAndUpdate({
+    name: req.body.name, 
+    msg: req.body.msg}, {
     $set: {
       thumbUp:req.body.thumbUp + 1
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
+
+app.put('/thumbdown', (req, res) => {
+  db.collection('messages')
+  .findOneAndUpdate({
+    name: req.body.name, 
+    msg: req.body.msg}, {
+    $set: {
+      thumbUp:req.body.thumbUp - 1
     }
   }, {
     sort: {_id: -1},
