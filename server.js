@@ -53,6 +53,23 @@ app.put('/messages', (req, res) => {
   })
 })
 
+app.put('/messages/thumbDown', (req, res) => {
+  console.log("recieving", req.body)
+  db.collection('messages')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $set: {
+      thumbUp:req.body.thumbUp - 1 ,
+      // secretMessage: "thank you Mark" 
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
 app.delete('/messages', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
     if (err) return res.send(500, err)
