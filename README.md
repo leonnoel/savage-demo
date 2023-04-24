@@ -7,7 +7,7 @@
   <li>Most of the code was boiler plate, so there was not much to actually write.  It was a matter of finding out how the first existing button works and tweaking that into something subtracts from the thumbs up counter that was already set.<li>
   <li>It turns out, that instead of duplicating the same 'thumbs up' code and changing the values to be 'thumbs down,' we needed to create a function that did everything that the thumbs up button did... except add 'minus one.'</li>
   <li><em>Are you kiddin' me?</em></li>
-   <li>All we had to do was create another function that did the same exact thing, but minus one...<li>
+   <li>All we had to do was create another function that did the same exact thing, but minus one...</li>
   <li>Array.from....</li> 
  <li>But hey, at least it's done.</li> 
 
