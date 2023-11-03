@@ -8,13 +8,17 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- my template for html with ejs  -->
   <h1>21 Savage</h1>
   <h2>Why you trappin so hard?</h2>
 
 
   <h3>Messages</h3>
   <ul class="messages">
-  <% for(var i=0; i<messages.length; i++) {%>
+    <!-- looping through my messages in my list below and for every message your going to create html elemenets such another bullet point(list), a span for the message, name, thumbup and creating 3 icons trash,like, dislike 
+    aria hidden = true is catered to inidividuals with screen reader aka accessibility for blind ppl
+  % is the syntax used with ejs and is place holders in line 24, 26, 27-->
+  <% for(var i=0; i<messages.length; i++) { %>
     <li class="message">
       <!-- everything we insert is a get -->
       <span><%= messages[i].name %></span>

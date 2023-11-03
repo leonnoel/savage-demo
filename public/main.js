@@ -4,22 +4,21 @@ var trash = document.getElementsByClassName("fa-trash");
 
 
 
-Array.from(thumbUp).forEach(function(element) {//array.from  goes thru each elment of array for arguement thumbUp
-      element.addEventListener('click', function(){ 
-        const name = this.parentNode.parentNode.childNodes[3].innerText // go up to the parent and up to the other parent and then the child (look at index.ejs its referring )
+Array.from(thumbUp).forEach(function(element) {//array.from (is a static method that creates a new array from an array like object like a nodelist) goes thru each element of array for arguement thumbUp
+      element.addEventListener('click', function(){
+        const name = this.parentNode.parentNode.childNodes[3].innerText; // go up to the parent and up to the other parent and then the child (look at index.ejs its referring )
 
-        console.log(this)
-        const msg = this.parentNode.parentNode.childNodes[7].innerText
-        const thumbUpCount = this.parentNode.parentNode.childNodes[9].innerText;//will take string and convert into a integer
-        console.log("thumbUpCount" + thumbUpCount)
+        console.log(this);
+        const msg = this.parentNode.parentNode.childNodes[7].innerText; //refer to ejs to get child node or console.log parentNode.parentNode.childNodes to get msg and to thumbup below
+        const thumbUpCount = this.parentNode.parentNode.childNodes[9].innerText; //will take string and convert into a integer
+        console.log("thumbUpCount" + thumbUpCount);
         fetch("messages", {
-          method: "put",
+          method: "put", //put method in server.js
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+          body: JSON.stringify({// what my body contains(3 properties name,msg,thumbup)
             name: name,
             msg: msg,
-            thumbUp: parseInt(thumbUpCount),
-           
+            thumbUp: parseInt(thumbUpCount),//parseInt method used to make string into integer
           }),
         })
           .then((response) => {
