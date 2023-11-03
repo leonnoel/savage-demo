@@ -1,19 +1,19 @@
 const express = require('express') //  briniging in the expresss module 
 const app = express() // storing the express module
-const bodyParser = require('body-parser') // bringing in the body parser module. Body parse is middleware (response handler, primary role is to parse the data from the http request ), helps to tiddy up the request object before 
-const MongoClient = require('mongodb').MongoClient // bringing in MongoDB modulewhich connect us to the MongoDB Client Database 
+const bodyParser = require('body-parser') // bringing in the body parser module. Body parse is middleware( is anything  btwn the request and response) (response handler, primary role is to parse the data from the http request ), helps to tiddy up the request object before 
+const MongoClient = require('mongodb').MongoClient // bringing in MongoDB module and creating a MongoDB Client to connect to the Database 
 
 var db, collection; // is creating empty variables for db and collection
 
 const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";// this is the connection string to get to the mongo database/cluster (database) url
 const dbName = "demo";// this is the name of his database from mongo db
 
-app.listen(3000, () => {// connected to data this is using express to listen to the server 
+app.listen(3000, () => {// 3000 is a port aka connection or metaphor like phone number. using express to listen to the port when user enters url aka "localhost:3000"
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => { // connects us to MongoDB w/ the connection string url. Uses headers and params of error and client 
         if(error) {// catch errors 
             throw error;
         }
-        db = client.db(dbName);// taking the global variable of db and setting it to the client database's name 
+        db = client.db(dbName);// this created an object representation of this database
         console.log("Connected to `" + dbName + "`!");//when connected console should log connected to with the dbName variable 
     });
 });
@@ -25,8 +25,8 @@ app.use(express.static('public')) //dont have to make a public route for assets 
 
 app.get('/', (req, res) => { //Making a get request (reads) the endpoint, the "/" is the endpoint of the homepage
   console.log("get method")
-  db.collection('messages').find().toArray((err, result) => {// got to your database find a collection of messages, find() method finds those messages  and turns each of those objects into an array and stored it in result and catches the error 
-    if (err) return console.log(err)// if error console.log error 
+  db.collection('messages').find().toArray((err, result) => {// got to your database find a collection of messages, find() method finds those messages array like object into an array 
+    if (err) return console.log(err)// if error console.log error and stop here
     res.render('index.ejs', {messages: result}) // render out response from index.ejs, try to render a template: rendering response into html templateand passes data to the template. The template in this case is the index.ejs 
   })
 })
@@ -43,23 +43,22 @@ app.post('/messages', (req, res) => {
 })
 
 
-
+//Put mehtod deals when user selects like or dislike icon
 app.put("/messages", (req, res) => {
 
   let startCounterThumbUp = 0;
 
   console.log(" (put method) :");
   console.log(req.body.thumbUp)
-  if(req.body.thumbUp !== undefined){
+  if(req.body.thumbUp !== undefined){//conditional handles whether the user selected thumbup 
     console.log("thumb up selected")
-    startCounterThumbUp  = req.body.thumbUp == null ? 0 : req.body.thumbUp + 1;
-   
+    startCounterThumbUp  = req.body.thumbUp == null ? 0 : req.body.thumbUp + 1;//ternary deals with like to handle "NaN" aka null in JS deal with it by adding 1 to it or setting the new list item to 0
   
   } else if(req.body.thumbDown !== undefined ){
-
-    startCounterThumbUp = req.body.thumbDown == null? 0: req.body.thumbDown - 1 ;// created variable to deal with when the dislike button is at 0 or if there is an existing numnber subtract 1
-    console.log("user selected thumb down")
-     
+    startCounterThumbUp =
+      req.body.thumbDown == null ? 0 : req.body.thumbDown - 1;
+    startCounterThumbUp = req.body.thumbUp == null ? 0 : req.body.thumbUp + 1; //ternary deals with dislike to handle "NaN" aka null in JS deal with it by subtract 1 to it or setting the new list item to 0
+    console.log("user selected thumb down");
   }
 
 
@@ -96,4 +95,3 @@ app.delete('/messages', (req, res) => {
 
 // Embedded JavaScript
 // middleware is anything  btwn the request and response
-// get to 
