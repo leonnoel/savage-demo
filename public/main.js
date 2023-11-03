@@ -68,7 +68,7 @@ Array.from(trash).forEach(function(element) {
         console.log(this.parentNode.parentNode.childNodes);
         const name = this.parentNode.parentNode.childNodes[3].innerText
         console.log("name delete: " + name)
-        const msg = this.parentNode.parentNode.childNodes[3].innerText
+        const msg = this.parentNode.parentNode.childNodes[7].innerText
         
         console.log("msg delete: " + msg)
         fetch('messages', {
