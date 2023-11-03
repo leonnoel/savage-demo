@@ -40,7 +40,7 @@ Array.from(thumbDown).forEach(function (element) {
     console.log(this);
     const msg = this.parentNode.parentNode.childNodes[7].innerText;
     // const thumbUpCount = this.parentNode.parentNode.childNodes[9].innerText;
-    const thumbDownCount = this.parentNode.parentNode.childNodes[11].innerText;
+    const thumbDownCount = this.parentNode.parentNode.childNodes[9].innerText;
     console.log("Thumb Down COUnt" + thumbDownCount);
     fetch("messages", {
       method: "put",
@@ -64,8 +64,13 @@ Array.from(thumbDown).forEach(function (element) {
 
 Array.from(trash).forEach(function(element) {
       element.addEventListener('click', function(){
-        const name = this.parentNode.parentNode.childNodes[1].innerText
+
+        console.log(this.parentNode.parentNode.childNodes);
+        const name = this.parentNode.parentNode.childNodes[3].innerText
+        console.log("name delete: " + name)
         const msg = this.parentNode.parentNode.childNodes[3].innerText
+        
+        console.log("msg delete: " + msg)
         fetch('messages', {
           method: 'delete',
           headers: {

@@ -24,6 +24,7 @@ app.use(bodyParser.json()) // configures middleware parses incomuing http reques
 app.use(express.static('public')) //dont have to make a public route for assets , just use this line and place assets in public folder 
 
 app.get('/', (req, res) => { //Making a get request (reads) the endpoint, the "/" is the endpoint of the homepage
+  console.log("get method")
   db.collection('messages').find().toArray((err, result) => {// got to your database find a collection of messages, find() method finds those messages  and turns each of those objects into an array and stored it in result and catches the error 
     if (err) return console.log(err)// if error console.log error 
     res.render('index.ejs', {messages: result}) // render out response from index.ejs, try to render a template: rendering response into html templateand passes data to the template. The template in this case is the index.ejs 
@@ -41,50 +42,51 @@ app.post('/messages', (req, res) => {
   })
 })
 
-app.put('/messages', (req, res) => {// the values we send from the fetch request
-  console.log("thumb like (put method):" )
-  // db.collection("messages").findOneAndUpdate(
-  //   { name: req.body.name, msg: req.body.msg },
-  //   {
-  //     $set: { // the set it what we are updating likes or dislikes with thumbs up (mongo synteax uses $ser:
-  //       thumbUp: req.body.thumbUp + 1,
-  //     },
-  //   },
-  //   {
-  //     sort: { _id: -1 },//used for a dataset for sorting operations whether string integers decimals etc.. (helps w/ readability), the one is used to stack the dataset at the very end 
-  //     upsert: true,// when you update it , it updates into db /( update + insert = upsert)
-  //   },
-  //   (err, result) => {
-  //     if (err) return res.send(err);
-  //     res.send(result);
-  //   }
-  // );
-})
+
 
 app.put("/messages", (req, res) => {
-  console.log("thumb Dislike (put method) :");
-  // the values we send from the fetch request
-  // db.collection("messages").findOneAndUpdate(
-  //   { name: req.body.name, msg: req.body.msg },
-  //   {
-  //     $set: {
-  //       // the set it what we are updating likes or dislikes with thumbs up (mongo synteax uses $ser:
-  //       thumbDown: req.body.thumbDown - 1,
-  //     },
-  //   },
-  //   {
-  //     sort: { _id: -1 }, //used for a dataset for sorting operations whether string integers decimals etc.. (helps w/ readability), the one is used to stack the dataset at the very end
-  //     upsert: true, // when you update it , it updates into db /( update + insert = upsert)
-  //   },
-  //   (err, result) => {
-  //     if (err) return res.send(err);
-  //     res.send(result);
-  //   }
-  // );
+
+  let startCounterThumbUp = 0;
+
+  console.log(" (put method) :");
+  console.log(req.body.thumbUp)
+  if(req.body.thumbUp !== undefined){
+    console.log("thumb up selected")
+    startCounterThumbUp  = req.body.thumbUp == null ? 0 : req.body.thumbUp + 1;
+   
+  
+  } else if(req.body.thumbDown !== undefined ){
+
+    startCounterThumbUp = req.body.thumbDown == null? 0: req.body.thumbDown - 1 ;// created variable to deal with when the dislike button is at 0 or if there is an existing numnber subtract 1
+    console.log("user selected thumb down")
+     
+  }
+
+
+ db.collection("messages").findOneAndUpdate(
+   { name: req.body.name, msg: req.body.msg },
+   {
+     $set: {
+       // the set it what we are updating likes or dislikes with thumbs up (mongo synteax uses $ser:
+       thumbUp: startCounterThumbUp,
+     },
+   },
+   {
+     sort: { _id: -1 }, //used for a dataset for sorting operations whether string integers decimals etc.. (helps w/ readability), the one is used to stack the dataset at the very end
+     upsert: true, // when you update it , it updates into db /( update + insert = upsert)
+   },
+   (err, result) => {
+     if (err) return res.send(err);
+     res.send(result);
+   }
+ );
+  //the values we send from the fetch request
+ 
 });
 
 
 app.delete('/messages', (req, res) => {
+  console.log("delete method")
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
     if (err) return res.send(500, err)
     res.send('Message deleted!')
