@@ -16,9 +16,12 @@
   <ul class="messages">
   <% for(var i=0; i<messages.length; i++) {%>
     <li class="message">
+      <!-- everything we insert is a get -->
       <span><%= messages[i].name %></span>
+      <!-- // depending how many objects there are it prints it that many times  -->
       <span><%= messages[i].msg %></span>
       <span><%= messages[i].thumbUp %></span>
+      <span><%= messages[i].thumbDown %></span>
       <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
       <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
       <span><i class="fa fa-trash" aria-hidden="true"></i></span>
@@ -28,7 +31,7 @@
 
   <h2>Add a message</h2>
 
-  <form action="/messages" method="POST">
+  <form action="/messages" method="POST">// a form will submit on its own due to the submit 
     <input type="text" placeholder="name" name="name">
     <input type="text" placeholder="message" name="msg">
     <button type="submit">Submit</button>
