@@ -70,3 +70,5 @@ Array.from(trash).forEach(function(element) {
         })
       });
 });
+
+//worked on this code with my house members: jose, erickson, and alejandra
