@@ -14,4 +14,4 @@
 
 1. run `npm run savage`
 2. Navigate to `localhost:3000`
-<img width="643" alt="Screenshot 2023-11-12 at 2 06 20 PM" src="https://github.com/briannawillis195/savage-demo/assets/143905399/85d12f73-cf9f-4fec-a196-08a45f9d880e">
+
