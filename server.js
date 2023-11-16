@@ -1,7 +1,7 @@
-const express = require('express')
-const app = express()
-const bodyParser = require('body-parser')
-const MongoClient = require('mongodb').MongoClient
+const express = require('express') //connect to express
+const app = express() //set the express variable to the app variable 
+const bodyParser = require('body-parser') //
+const MongoClient = require('mongodb').MongoClient //set up how we talk to database
 
 var db, collection;
 
@@ -30,19 +30,28 @@ app.get('/', (req, res) => {
   })
 })
 
+// req.name.msg is to get the message from the from
+// req.name.name is to get the name from the form
 app.post('/messages', (req, res) => {
+  console.log(req)
   db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')
-    res.redirect('/')
+    res.redirect('/') //triggers the GET
   })
 })
 
+
+//worked on making the thumbs down button with my house moses members
 app.put('/messages', (req, res) => {
+  const upOrDown = req.body.hasOwnProperty('thumbDown') ? 'thumbDown' : 'thumbUp'
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    $set: {
-      thumbUp:req.body.thumbUp + 1
+    $inc: { //$sets something from the database and the code below allows us to SET the thumbs up to its value
+      //the mongoDB docs state that using $inc with .updateOne() will increase metrics by one. thats why we use [upOrDown]: 1 
+      //thumbUp:req.body.thumbUp + 1,
+      //in brackets to specify the key (property name) for the object being updated in the database
+      [upOrDown]: 1,
     }
   }, {
     sort: {_id: -1},
