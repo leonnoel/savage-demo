@@ -1,0 +1,34 @@
+{
+	"folders": [
+		{
+			"name": "codeWars",
+			"path": "../../../codeWars"
+		},
+		{
+			"name": "theSpaceOnGirard",
+			"path": "../../../../Freelance/theSpaceOnGirard"
+		},
+		{
+			"name": "Week 9",
+			"path": "../../../../Week 9"
+		},
+		{
+			"path": "../../../../week10"
+		},
+		{
+			"path": "../../../../Git Projects/apiProjects"
+		},
+		{
+			"path": "../../../../Portfolio/myPortfolio"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../../demoDay"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Week 9"
+	}
+}
