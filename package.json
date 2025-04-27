@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "savage": "nodemon server.js"
+    "savage": "node server.js --watch"
   },
   "author": "",
   "license": "ISC",
@@ -15,10 +15,9 @@
     "bson": ">=1.0.5",
     "ejs": "^3.1.8",
     "express": "^4.13.3",
-    "mongodb": "^3.3.4"
+    "mongodb": "^3.7.4"
   },
   "devDependencies": {
-    "minimist": ">=1.2.2",
-    "nodemon": "^2.0.4"
+    "minimist": ">=1.2.2"
   }
 }

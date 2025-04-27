@@ -38,6 +38,7 @@ app.post('/messages', (req, res) => {
   })
 })
 
+// thumbs up 
 app.put('/messages', (req, res) => {
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
@@ -52,6 +53,24 @@ app.put('/messages', (req, res) => {
     res.send(result)
   })
 })
+
+
+// thumbs down **question why dies the name not change**
+app.put('/down', (req, res) => {
+  db.collection('messages')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $set: {
+      thumbUp:req.body.thumbUp - 1
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
 
 app.delete('/messages', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
