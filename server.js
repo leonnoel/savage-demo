@@ -39,10 +39,21 @@ app.post('/messages', (req, res) => {
 })
 
 app.put('/messages', (req, res) => {
+// add a variable for the thumbDown
+  let thumbDownLogic
+//create conditional to toggle between put for thumbUp and thumbDown
+// if this is truthy, 
+  if (Object.keys(req.body)[2] == 'thumbUp') {
+// then set it to this
+    thumbDownLogic = req.body.thumbUp + 1 
+  }else if (Object.keys(req.body)[2] == 'thumbDown'){
+    thumbDownLogic = req.body.thumbDown - 1
+  }
+
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
-      thumbUp:req.body.thumbUp + 1
+      thumbUp: thumbDownLogic
     }
   }, {
     sort: {_id: -1},
@@ -59,3 +70,5 @@ app.delete('/messages', (req, res) => {
     res.send('Message deleted!')
   })
 })
+
+// worked on this with classmates...led by Joshi. we broke it and we broke it again, then we fixed it, broke it and fixed again.
