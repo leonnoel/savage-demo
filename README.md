@@ -1,4 +1,4 @@
-![21 Savage](public/21savage.jpg)
+fullstack Movies app
 
 ## Installation
 
