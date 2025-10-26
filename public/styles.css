@@ -1,6 +1,28 @@
 body{
-  background: red;
+ background-image: linear-gradient(to right, rgb(114, 205, 250), rgb(0, 255, 255), rgb(0, 255, 213));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 h3{
   margin-top: 40px;
+}
+button {
+  background-image: linear-gradient(to right, #8f829c 0%, #bcc4d3 100%);
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+form{
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

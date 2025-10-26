@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>21 Savage Fans</title>
+  <title>Movies app</title>
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="stylesheet" href="font-awesome.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>21 Savage</h1>
-  <h2>Why you trappin so hard?</h2>
+  <h1>Movies</h1>
+  <h2>What is your favorite movie?</h2>
 
 
-  <h3>Messages</h3>
+  <h3>Movies</h3>
   <ul class="messages">
   <% for(var i=0; i<messages.length; i++) {%>
     <li class="message">
@@ -26,11 +26,11 @@
   <% } %>
   </ul>
 
-  <h2>Add a message</h2>
+  <h2>Add a movie</h2>
 
   <form action="/messages" method="POST">
     <input type="text" placeholder="name" name="name">
-    <input type="text" placeholder="message" name="msg">
+   
     <button type="submit">Submit</button>
   </form>
 
