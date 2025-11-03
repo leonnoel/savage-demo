@@ -1,11 +1,11 @@
 {
-  "name": "crud-express-mongo",
+  "name": "anime-project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "savage": "nodemon server.js"
+    "go": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,10 +15,10 @@
     "bson": ">=1.0.5",
     "ejs": "^3.1.8",
     "express": "^4.13.3",
-    "mongodb": "^3.3.4"
+    "mongodb": "^5.9.2"
   },
   "devDependencies": {
     "minimist": ">=1.2.2",
-    "nodemon": "^2.0.4"
+    "nodemon": "^3.1.10"
   }
 }

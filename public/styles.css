@@ -1,6 +1,193 @@
-body{
-  background: red;
+* {
+  box-sizing: border-box;
 }
-h3{
-  margin-top: 40px;
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 100vh;
+  background-image: url(A\ N\ I\ M\ E\ wallpaper.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  overflow-x: hidden;
+
+}
+
+li span:nth-of-type(4) {
+  color: red;
+}
+
+li span:nth-of-type(5) {
+  color: rebeccapurple;
+}
+
+li span:nth-of-type(6) {
+  color: black;
+}
+
+.top {
+  text-align: center;
+  height: 10em;
+  margin-top: 0%;
+  padding-top: .6em;
+  font-size: 2rem;
+  background-color: rgba(212, 84, 245, 0.8);
+  border-radius: 3em;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 20em;
+  margin-top: 2em;
+  background-color: #619fcbbf;
+  border-radius: 5em;
+}
+
+section h2 {
+  font-size: 3rem;
+  margin-top: 0%;
+}
+
+section div {
+  /* border: 1px solid; */
+  height: 20em;
+  padding: 2em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+section form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  gap: .5em;
+}
+
+form input {
+  text-align: center;
+  height: 2.5em;
+  width: 25em;
+  border-radius: 25px;
+  border: none;
+}
+
+form button {
+  width: 12em;
+  height: 2.5em;
+  border-radius: 5em;
+  background-color: azure;
+  cursor: pointer;
+}
+
+.down {
+  height: 50em;
+  margin-top: 5em;
+  background-color: rgba(236, 138, 138, 0.88);
+  text-align: left;
+  border-radius: 3em;
+}
+
+.down h2 {
+  font-size: 3rem;
+  padding-left: 3em;
+}
+
+.down li {
+  font-size: 1.5rem;
+}
+
+.down ol {
+  display: flex;
+  flex-flow: column wrap;
+  height: 40em;
+  gap: 1em;
+}
+
+@media (max-width: 1024px) {
+  body {
+    width: 95%;
+  }
+
+  section {
+    padding: 1.5em;
+  }
+
+  form input,
+  form button {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 55%;
+  }
+
+  .top {
+    font-size: 1.8rem;
+    border-radius: 2em;
+  }
+
+  section {
+    border-radius: 2em;
+  }
+
+  section h2 {
+    font-size: 2.5rem;
+  }
+
+  .down h2 {
+    font-size: 2.2rem;
+    padding-left: 0.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 50%;
+  }
+
+  body {
+    width: 100%;
+    padding: 0 1em;
+  }
+
+  .top {
+    font-size: 1.6rem;
+    padding: 1em;
+  }
+
+  section h2 {
+    font-size: 2.2rem;
+  }
+
+  form input {
+    font-size: 1.4rem;
+    height: 3em;
+  }
+
+  form button {
+    height: 3em;
+  }
+
+  .down h2 {
+    font-size: 2rem;
+  }
+
+  .down li {
+    font-size: 1.4rem;
+  }
 }

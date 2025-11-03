@@ -3,59 +3,106 @@ const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 
-var db, collection;
-
-const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
-const dbName = "demo";
-
-app.listen(3000, () => {
-    MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
-        if(error) {
-            throw error;
-        }
-        db = client.db(dbName);
-        console.log("Connected to `" + dbName + "`!");
-    });
-});
+const url = 'mongodb+srv://workamohamed_db_user:test123@cluster0.mbacbks.mongodb.net/Anime?appName=Cluster0';
+const dbName = "Anime";
 
 app.set('view engine', 'ejs')
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static('public'))
 
-app.get('/', (req, res) => {
-  db.collection('messages').find().toArray((err, result) => {
-    if (err) return console.log(err)
-    res.render('index.ejs', {messages: result})
-  })
-})
+MongoClient.connect(url)
+  .then(client => {
+    console.log('Connected to Database')
+    const db = client.db(dbName)
+    const quotesCollection = db.collection('Poetry')
 
-app.post('/messages', (req, res) => {
-  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
-    if (err) return console.log(err)
-    console.log('saved to database')
-    res.redirect('/')
-  })
-})
+    console.log("Connected to `" + dbName + "`!");
 
-app.put('/messages', (req, res) => {
-  db.collection('messages')
-  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    $set: {
-      thumbUp:req.body.thumbUp + 1
-    }
-  }, {
-    sort: {_id: -1},
-    upsert: true
-  }, (err, result) => {
-    if (err) return res.send(err)
-    res.send(result)
-  })
-})
+    app.get('/', (req, res) => {
+      quotesCollection.find().toArray().then(result => {
+        console.log(result)
+        res.render('index.ejs', { Poetry: result })
+      })
+        .catch(error => console.log(error))
+    })
 
-app.delete('/messages', (req, res) => {
-  db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
-    if (err) return res.send(500, err)
-    res.send('Message deleted!')
+    app.post('/quotes', (req, res) => {
+      const name = req.body.name?.trim();
+      const quote = req.body.quote?.trim();
+
+      if (!name || !quote) {
+        console.log('Skipped empty entry');
+        return res.redirect('/');
+      }
+
+      quotesCollection.insertOne({ name, quote, thumbUp: 0 })
+        .then(result => {
+          console.log(result)
+          res.redirect('/')
+        })
+        .catch(error => console.log(error))
+    })
+
+    app.put('/messages', (req, res) => {
+      quotesCollection
+        .findOneAndUpdate({ name: req.body.name.trim(), quote: req.body.quote.trim() },
+          {
+            $set: {
+              thumbUp: req.body.thumbUp + 1
+            }
+          }, {
+          sort: { _id: -1 },
+          upsert: false
+        })
+        .then(result => {
+          res.json('Success')
+        })
+        .catch(error => {
+          console.error(error)
+          res.status(500).send(error)
+        })
+    })
+
+    app.put('/messagesDown', (req, res) => {
+      quotesCollection
+        .findOneAndUpdate({ name: req.body.name.trim(), quote: req.body.quote.trim() }, {
+          $set: {
+            thumbUp: req.body.thumbUp - 1
+          }
+        }, {
+          sort: { _id: -1 },
+          upsert: false
+        })
+        .then(result => {
+          res.json('Success')
+        })
+        .catch(error => {
+          console.error(error)
+          res.status(500).send(error)
+        })
+    })
+
+
+    app.delete('/delete', (req, res) => {
+      console.log('Delete request received:', req.body);  // Add this line
+      quotesCollection
+        .deleteOne({ name: req.body.name, quote: req.body.quote})
+        .then(result => {
+          console.log('Delete result:', result);  // Add this line
+          if (result.deletedCount === 0) {
+            return res.json('No quote to delete')
+          }
+          res.json('Message deleted!')
+        })
+        .catch(error => {
+          console.error(error)
+          res.status(500).json('Error deleting message')
+        })
+    });
+
+    app.listen(8000, function () {
+      console.log('listening on port 8000')
+    });
   })
-})
+  .catch(error => console.error(error))

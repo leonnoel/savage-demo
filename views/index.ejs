@@ -1,40 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>21 Savage Fans</title>
+  <title>Haiku No Kami</title>
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="stylesheet" href="font-awesome.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <h1>21 Savage</h1>
-  <h2>Why you trappin so hard?</h2>
+  <div class="top">
+    <h1> Haiku No Kami</h1>
+    <h2>"Born in shadows, destined for greatness."</h2>
+    <p style="font-size:1.9rem; margin-top:0.5rem;"> A haiku from the streets of Konoha — where pain meets
+      purpose and dreams chase destiny. </p> <!-- this was yoinked from GPT -->
+  </div> 
+
+  <section>
 
 
-  <h3>Messages</h3>
-  <ul class="messages">
-  <% for(var i=0; i<messages.length; i++) {%>
-    <li class="message">
-      <span><%= messages[i].name %></span>
-      <span><%= messages[i].msg %></span>
-      <span><%= messages[i].thumbUp %></span>
-      <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-      <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
-      <span><i class="fa fa-trash" aria-hidden="true"></i></span>
-    </li>
-  <% } %>
-  </ul>
+    <div>
+      <h2> Add quote</h2>
+      <form action="/quotes" method="POST">
+        <input type="text" placeholder="name" name="name" />
+        <input type="text" placeholder="quote" name="quote" />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </section>
 
-  <h2>Add a message</h2>
 
-  <form action="/messages" method="POST">
-    <input type="text" placeholder="name" name="name">
-    <input type="text" placeholder="message" name="msg">
-    <button type="submit">Submit</button>
-  </form>
+  <div class="down">
+    <h2>Quotes</h2>
+    <ol class="quotes">
+      <% for(let i=0; i<Poetry.length; i++) {%>
+        <li class="message">
+          <span>
+            <%= `${Poetry[i].name}`%>
+          </span>:
+          "<span>
+            <%= Poetry[i].quote %>
+          </span>"
+          <span>
+            <%= Poetry[i].thumbUp %>
+          </span>
+          <span><i class="fa fa-solid fa-heart" aria-hidden="true"></i></span>
+          <span><i class="fa fa-solid fa-arrow-down" aria-hidden="true"></i></span>
+          <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+        </li>
+        <% } %>
+    </ol>
+  </div>
 
   <script src="main.js"></script>
 
 </body>
+
 </html>
+
+
+
+
+<script src="/main.js"></script>
