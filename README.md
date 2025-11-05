@@ -1,4 +1,4 @@
-### savage-demo
+### Movies-app
 fullstack Movies app
 
 ## Installation
