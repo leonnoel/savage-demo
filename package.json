@@ -1,7 +1,7 @@
 {
   "name": "crud-express-mongo",
   "version": "1.0.0",
-  "description": "",
+  "description": "![21 Savage](public/21savage.jpg)",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
@@ -20,5 +20,13 @@
   "devDependencies": {
     "minimist": ">=1.2.2",
     "nodemon": "^2.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hectormelendez129/api-demo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hectormelendez129/api-demo/issues"
+  },
+  "homepage": "https://github.com/hectormelendez129/api-demo#readme"
 }
