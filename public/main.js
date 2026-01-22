@@ -1,4 +1,6 @@
 var thumbUp = document.getElementsByClassName("fa-thumbs-up");
+// create variable for thumbDown
+let thumbDown = document.getElementsByClassName("fa-thumbs-down");
 var trash = document.getElementsByClassName("fa-trash");
 
 Array.from(thumbUp).forEach(function(element) {
@@ -9,10 +11,36 @@ Array.from(thumbUp).forEach(function(element) {
         fetch('messages', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
+          // provides additional info about the client's request to the server
           body: JSON.stringify({
             'name': name,
             'msg': msg,
             'thumbUp':thumbUp
+          })
+        })
+        .then(response => {
+          if (response.ok) return response.json()
+        })
+        .then(data => {
+          console.log(data)
+          window.location.reload(true)
+        })
+      });
+});
+
+// create an array for thumbDown
+Array.from(thumbDown).forEach(function(element) {
+      element.addEventListener('click', function(){
+        const name = this.parentNode.parentNode.childNodes[1].innerText
+        const msg = this.parentNode.parentNode.childNodes[3].innerText
+        const thumbDown = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
+        fetch('messages', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            'name': name,
+            'msg': msg,
+            'thumbDown':thumbDown
           })
         })
         .then(response => {
