@@ -1,3 +1,6 @@
+//It reads the .env file containing MONGO_URL first that has my username & password for MongoDB Atlas. 
+require('dotenv').config()
+
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
@@ -5,10 +8,12 @@ const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
 
-const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
-const dbName = "demo";
+const url = process.env.MONGO_URL;
+const dbName = "savage-demo";
 
-app.listen(3000, () => {
+//Render assigns PORT automatically, so 3000 is a fallback for local development.
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
         if(error) {
             throw error;
@@ -31,14 +36,15 @@ app.get('/', (req, res) => {
 })
 
 app.post('/messages', (req, res) => {
-  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0}, (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')
     res.redirect('/')
   })
 })
 
-app.put('/messages', (req, res) => {
+//Thumbs Up
+app.put('/likes', (req, res) => {
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
@@ -53,7 +59,25 @@ app.put('/messages', (req, res) => {
   })
 })
 
-app.delete('/messages', (req, res) => {
+//Thumbs Down
+app.put('/dislikes', (req, res) => {
+  db.collection('messages')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $set: {
+      //The thumbUp or thumbDown both are manipulating the thumbUp number.
+      thumbUp:req.body.thumbDown - 1
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
+//Delete 
+app.delete('/deleteMsg', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
     if (err) return res.send(500, err)
     res.send('Message deleted!')
