@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 
-var db, collection;
+let db, collection;
 
 const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
 const dbName = "demo";
@@ -24,7 +24,7 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  db.collection('messages').find().toArray((err, result) => {
+  db.collection('messages').find().sort({likes:-1}).toArray((err, result) => {
     if (err) return console.log(err)
     res.render('index.ejs', {messages: result})
   })
@@ -43,6 +43,7 @@ app.put('/messages', (req, res) => {
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
       thumbUp:req.body.thumbUp + 1
+      //thumbUp:thumbUp +1
     }
   }, {
     sort: {_id: -1},
@@ -52,6 +53,21 @@ app.put('/messages', (req, res) => {
     res.send(result)
   })
 })
+app.put('/down', (req, res) => {
+  db.collection('messages')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $set: {
+      thumbUp:req.body.thumbUp - 1
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
 
 app.delete('/messages', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
