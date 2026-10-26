@@ -1,6 +1,21 @@
-body{
-  background: red;
+ body {
+    /* background: blue; */
+    background-image: url('images\ \(1\).jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+div{
+  border:5px, black, solid;
+  border-radius:10px;
+  width:50%;
+  background:rgb(16, 134, 149);
+  padding-bottom:5%;
 }
-h3{
-  margin-top: 40px;
+h1,h2,h3,h4,form{
+  text-align:center;
 }
