@@ -1,5 +1,9 @@
 body{
-  background: red;
+  /* I changed this from bright red to a muted warm light gray because the red was
+     hard on the eyes. I chose a light color instead of dark charcoal because the page
+     never sets a text color, so text is the browser's default black, which is hard
+     to read on a dark background. */
+  background: #e4e2dd;
 }
 h3{
   margin-top: 40px;

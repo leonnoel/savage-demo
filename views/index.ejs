@@ -14,12 +14,30 @@
 
   <h3>Messages</h3>
   <ul class="messages">
+  <%# The server runs this template (res.render in GET /) and passes in `messages`,
+      the array of documents from MongoDB. The loop builds one <li> per message.
+      The "percent-equals" tags below print a value into the HTML, escaped, so user
+      text can't inject HTML. Comments like this one ("percent-hash" tags) are
+      stripped by EJS and never reach the browser. %>
   <% for(var i=0; i<messages.length; i++) {%>
-    <li class="message">
-      <span><%= messages[i].name %></span>
-      <span><%= messages[i].msg %></span>
-      <span><%= messages[i].thumbUp %></span>
+    <%# I gave each span a class name (name, msg, thumbUpCount, thumbDownCount) so
+        main.js can find it with li.querySelector('.name'). The old code found values
+        by position (childNodes[1], [3], [5]), which silently grabs the wrong element
+        as soon as a span is added, like the thumbDownCount span I added.
+        thumbDownCount is new: thumbDown was saved in MongoDB but never displayed.
+        `|| 0` shows 0 when a message has no stored count. Older messages may not have
+        a thumbDown field, and without || 0 they would show a blank instead.
+        data-id stores the message's unique MongoDB _id on the <li>, so main.js can tell
+        the server exactly which message was clicked. Name + text weren't enough: two
+        messages can have the same text, and the browser's innerText changes some text
+        (double spaces become one, a missing msg becomes ""), so the wrong message got
+        the vote or no message matched (404). %>
+    <li class="message" data-id="<%= messages[i]._id %>">
+      <span class="name"><%= messages[i].name %></span>
+      <span class="msg"><%= messages[i].msg %></span>
+      <span class="thumbUpCount"><%= messages[i].thumbUp || 0 %></span>
       <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
+      <span class="thumbDownCount"><%= messages[i].thumbDown || 0 %></span>
       <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
       <span><i class="fa fa-trash" aria-hidden="true"></i></span>
     </li>
