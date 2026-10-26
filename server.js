@@ -18,15 +18,15 @@ app.listen(3000, () => {
     });
 });
 
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs') // lets us plug in html onto client side
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
-app.use(express.static('public'))
+app.use(bodyParser.json()) // lets us submit stuff using forms 
+app.use(express.static('public')) // whatever you put in this public folder is hosted
 
 app.get('/', (req, res) => {
   db.collection('messages').find().toArray((err, result) => {
     if (err) return console.log(err)
-    res.render('index.ejs', {messages: result})
+    res.render('index.ejs', {messages: result}) // this renders an HTML file
   })
 })
 
@@ -39,6 +39,7 @@ app.post('/messages', (req, res) => {
 })
 
 app.put('/messages', (req, res) => {
+  console.log(req)
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
